@@ -18,7 +18,7 @@ function formatSpots(props) {
 }
 
   return (
-    <li className={DayListItem} onClick={() => props.setday(props.name)}>
+    <li className={DayListItem} onClick={() => props.setDay(props.name)}>
       <h2 className="text--regular">{props.name}</h2> 
       <h3 className="text--light">{formatSpots(props)}</h3>
       </li>
