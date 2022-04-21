@@ -20,7 +20,7 @@ const days = [
 ];
 
 export default function Application(props) {
-  const [value, onChange] = useState("Monday");
+  const [day, setDay] = useState("Monday");
   return (
     <main className="layout">
       <section className="sidebar">
