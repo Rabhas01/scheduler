@@ -4,8 +4,6 @@ import DayList from "components/DayList";
 import  Appointment from "./Appointment";
 import axios from "axios";
 
-
-
 const appointments = {
   "1": {
     id: 1,
