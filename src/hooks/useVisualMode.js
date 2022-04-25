@@ -16,10 +16,8 @@ export default function useVisualMode(initial) {
   };
    
   function back() { 
-    const History = [...history];
-    if (History.length > 1) {
-      setHistory(History.pop());
-    }
+    const History = history.length > 1 ? history.slice(0, -1) : history;
+    setHistory(History);
     const lastMode = History[History.length - 1] 
     setMode(lastMode);
   }
