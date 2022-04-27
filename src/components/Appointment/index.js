@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import useVisualMode from "hooks/useVisualMode";
 import "./style.scss";
 import Header from "./Header";
@@ -6,11 +6,14 @@ import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
+import Confirm from "./Confirm";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE ="CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
 export default function Appointment(props) {
 
@@ -31,8 +34,20 @@ export default function Appointment(props) {
     transition(SHOW);
     }
   }
-  
+    function remove() {
+      if (mode === SHOW) {
+        transition(CONFIRM);
+      } else {
+        transition(DELETING);
+        
+      props.cancelInterview(props.id);
+      transition(EMPTY);
+    }
+  }
+ 
+
   return(
+    <Fragment>
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -41,6 +56,7 @@ export default function Appointment(props) {
        <Show
        student={props.interview.student}
        interviewer={props.interview.interviewer}
+       onDelete={remove}
        /> 
        )}
 
@@ -54,7 +70,17 @@ export default function Appointment(props) {
 
       {mode === SAVING && 
       <Status message="Saving" />}
-    </article>
 
+      {mode === DELETING && (
+      <Status message="Deleting"/>)}
+
+      {mode === CONFIRM &&
+          (<Confirm
+            message="Are you sure you would like to delete?"
+            onCancel={back}
+            onConfirm={remove} />)}
+
+    </article>
+    </Fragment>
   );
 }
