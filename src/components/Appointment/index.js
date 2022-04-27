@@ -1,13 +1,17 @@
-import React from "react";
+import React, { Fragment } from "react";
 import useVisualMode from "hooks/useVisualMode";
 import "./style.scss";
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
-import Form from "./Form";
 import Status from "./Status";
+import Form from "./Form";
 import Confirm from "./Confirm";
 import Error from "./Error";
+
+
+
+export default function Appointment(props) {
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -18,8 +22,6 @@ const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
-
-export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -57,10 +59,22 @@ export default function Appointment(props) {
   }
 
   return(
-    
-    <article className="appointment">
+    <Fragment>
       <Header time={props.time} />
+    <article className="appointment">
+     
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === SAVING && 
+      <Status message = "Saving" />}
+
+      {mode === DELETING && (
+      <Status message = "Deleting"/>)}
+
+      {mode === CONFIRM &&
+          (<Confirm
+            message="Are you sure you would like to delete?"
+            onCancel={back}
+            onConfirm={remove} />)}
 
       {mode === SHOW && (
        <Show
@@ -79,18 +93,7 @@ export default function Appointment(props) {
         />
       )}
 
-      {mode === SAVING && 
-      <Status message="Saving" />}
-
-      {mode === DELETING && (
-      <Status message="Deleting"/>)}
-
-      {mode === CONFIRM &&
-          (<Confirm
-            message="Are you sure you would like to delete?"
-            onCancel={back}
-            onConfirm={remove} />)}
-
+     
       { mode === EDIT &&
         <Form
           name={props.interview.student}
@@ -109,6 +112,6 @@ export default function Appointment(props) {
       onClose = {back}
       message = "Sorry appointment could not be deleted"/>}
     </article>
-    
+    </Fragment>
   );
 }

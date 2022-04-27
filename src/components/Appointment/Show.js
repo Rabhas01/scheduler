@@ -22,8 +22,8 @@ export default function Show(props) {
       <img
         className="appointment__actions-button"
         src="images/trash.png"
-        onClick={props.onDelete}
         alt="Delete"
+        onClick={props.onDelete}
       />
     </section>
   </section>
