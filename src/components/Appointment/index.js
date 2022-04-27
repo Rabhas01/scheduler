@@ -7,6 +7,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -15,6 +16,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
 
@@ -31,18 +34,22 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview);
-    transition(SHOW);
+    
+    props.bookInterview(props.id, interview)
+    .then(() => transition(SHOW))
+    .catch(() => transition(ERROR_SAVE));
     }
   }
+
     function remove() {
       if (mode === SHOW) {
         transition(CONFIRM);
       } else {
         transition(DELETING);
         
-      props.cancelInterview(props.id);
-      transition(EMPTY);
+      props.cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETE));
     }
   }
   
@@ -84,16 +91,20 @@ export default function Appointment(props) {
             message="Are you sure you would like to delete?"
             onCancel={back}
             onConfirm={remove} />)}
-      { mode === EDIT &&
-      <Form
-      name={props.interview.student}
-      interviewer={props.interview.interviewer.id}
-            onSave={save}
-            onCancel={back}
-            interviewers={props.interviewers}
-      />
 
-      }
+      { mode === EDIT &&
+        <Form
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+          onSave={save}
+          onCancel={back}
+          interviewers={props.interviewers}
+      />}
+      {mode === ERROR_SAVE &&
+      <Error message = "Sorry appointment could not be saved" />}
+
+      {mode === ERROR_DELETE &&
+      <Error message = "Sorry appointment could not be deleted"/>}
     </article>
     
   );
