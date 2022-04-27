@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import useVisualMode from "hooks/useVisualMode";
 import "./style.scss";
 import Header from "./Header";
@@ -14,6 +14,7 @@ const CREATE ="CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
 
@@ -44,10 +45,13 @@ export default function Appointment(props) {
       transition(EMPTY);
     }
   }
- 
+  
+  function edit() {
+    transition(EDIT)
+  }
 
   return(
-    <Fragment>
+    
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -57,6 +61,7 @@ export default function Appointment(props) {
        student={props.interview.student}
        interviewer={props.interview.interviewer}
        onDelete={remove}
+       onEdit={edit}
        /> 
        )}
 
@@ -79,8 +84,17 @@ export default function Appointment(props) {
             message="Are you sure you would like to delete?"
             onCancel={back}
             onConfirm={remove} />)}
+      { mode === EDIT &&
+      <Form
+      name={props.interview.student}
+      interviewer={props.interview.interviewer.id}
+            onSave={save}
+            onCancel={back}
+            interviewers={props.interviewers}
+      />
 
+      }
     </article>
-    </Fragment>
+    
   );
 }
