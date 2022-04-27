@@ -26,22 +26,21 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
-
-    if (name && interviewer) {
-      transition(SAVING);
-
-    const interview = {
+      const interview = {
       student: name,
       interviewer
     };
     
+    if (name && interviewer) {
+      transition(SAVING);
+
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW))
-    .catch(() => transition(ERROR_SAVE));
+    .catch(() => transition(ERROR_SAVE, true));
     }
   }
 
-    function remove() {
+    function remove(event) {
       if (mode === SHOW) {
         transition(CONFIRM);
       } else {
@@ -49,7 +48,7 @@ export default function Appointment(props) {
         
       props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch(() => transition(ERROR_DELETE));
+      .catch(() => transition(ERROR_DELETE, true));
     }
   }
   
@@ -101,10 +100,14 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
       />}
       {mode === ERROR_SAVE &&
-      <Error message = "Sorry appointment could not be saved" />}
+      <Error 
+      onClose ={back}
+      message = "Sorry appointment could not be saved" />}
 
       {mode === ERROR_DELETE &&
-      <Error message = "Sorry appointment could not be deleted"/>}
+      <Error
+      onClose = {back}
+      message = "Sorry appointment could not be deleted"/>}
     </article>
     
   );
