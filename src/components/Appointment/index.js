@@ -67,8 +67,8 @@ const ERROR_DELETE = "ERROR_DELETE";
       {mode === SAVING && 
       <Status message = "Saving" />}
 
-      {mode === DELETING && (
-      <Status message = "Deleting"/>)}
+      {mode === DELETING && 
+      <Status message = "Deleting"/>}
 
       {mode === CONFIRM &&
           (<Confirm

@@ -34,12 +34,12 @@ export function getInterviewersForDay(state, day) {
 
   const chosenDay = state.days.length
   if (chosenDay !== 0 ){
-  const selectedDay = state.days.find(dayArry => dayArry.name === day);
-  if (selectedDay) {
-    for (const appt of selectedDay.interviewers){
-      interviewForDay.push(state.interviewers[appt])
+    const selectedDay = state.days.find(dayArry => dayArry.name === day);
+    if (selectedDay) {
+      for (const appt of selectedDay.interviewers){
+          interviewForDay.push(state.interviewers[appt])
+        }
       }
-    }
   }
   return interviewForDay;
 }
