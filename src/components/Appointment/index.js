@@ -13,6 +13,7 @@ import Error from "./Error";
 
 export default function Appointment(props) {
 
+// All Mode transiotions of the app
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE ="CREATE";
@@ -27,6 +28,7 @@ const ERROR_DELETE = "ERROR_DELETE";
     props.interview ? SHOW : EMPTY
   );
 
+  //function to get and save name and interviewer
   function save(name, interviewer) {
       const interview = {
       student: name,
@@ -41,7 +43,8 @@ const ERROR_DELETE = "ERROR_DELETE";
     .catch(() => transition(ERROR_SAVE, true));
     }
   }
-
+  
+  //Delete interview function
     function remove() {
       if (mode === SHOW) {
         transition(CONFIRM);
