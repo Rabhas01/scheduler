@@ -3,7 +3,7 @@ A single page **React** application that allows user to book, edit and delete in
 
 ## Final Product 
 
-![]()
+![](https://github.com/Rabhas01/scheduler/blob/master/docs/Interview-Scheduler.gif?raw=true)
 
 ## Setup
 
