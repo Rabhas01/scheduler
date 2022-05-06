@@ -98,7 +98,7 @@ const ERROR_DELETE = "ERROR_DELETE";
      
       { mode === EDIT &&
         <Form
-          name={props.interview.student}
+          student={props.interview.student}
           interviewer={props.interview.interviewer.id}
           onSave={save}
           onCancel={back}
