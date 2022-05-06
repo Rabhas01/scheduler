@@ -35,13 +35,20 @@ const ERROR_DELETE = "ERROR_DELETE";
       interviewer
     };
     
-    if (name && interviewer) {
+    if (mode === EDIT) {
       transition(SAVING);
 
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview, true)
     .then(() => transition(SHOW))
     .catch(() => transition(ERROR_SAVE, true));
     }
+
+    else {
+      props.bookInterview(props.id, interview)
+    .then(() => transition(SHOW))
+    .catch(() => transition(ERROR_SAVE, true));
+    }
+      
   }
   
   //Delete interview function
@@ -76,7 +83,8 @@ const ERROR_DELETE = "ERROR_DELETE";
           (<Confirm
             message="Are you sure you would like to delete?"
             onCancel={back}
-            onConfirm={remove} />)}
+            onConfirm={remove} 
+            />)}
 
       {mode === SHOW && (
        <Show
@@ -94,7 +102,6 @@ const ERROR_DELETE = "ERROR_DELETE";
         onSave={save}
         />
       )}
-
      
       { mode === EDIT &&
         <Form
@@ -104,6 +111,7 @@ const ERROR_DELETE = "ERROR_DELETE";
           onCancel={back}
           interviewers={props.interviewers}
       />}
+
       {mode === ERROR_SAVE &&
       <Error 
       onClose ={back}
