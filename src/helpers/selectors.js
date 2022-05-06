@@ -1,17 +1,13 @@
 export function getAppointmentsForDay(state, day) {
-  const appointmentsForDay = [];  
-  const chosenDay = state.days.length
-  if (chosenDay !== 0 ){
-  const selectedDay = state.days.find(dayArry => dayArry.name === day);
-  if (selectedDay) {
-    for (const appt of selectedDay.appointments){
-      appointmentsForDay.push(state.appointments[appt])
-      }
+  const chosenDay = state.days.length;
+  if (chosenDay) {
+    const selectedDay = state.days.find((dayArry) => dayArry.name === day);
+    if (selectedDay) {
+      return selectedDay.appointments.map((appt) => state.appointments[appt]);
     }
   }
-  return appointmentsForDay;
+  return [];
 }
-
 export function getInterview(state, interview){
 
   if (interview === null) {
